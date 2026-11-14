@@ -1,30 +1,33 @@
-    document.addEventListener("DOMContentLoaded", function () {
-    let slideIndex = 0;
-    showSlides();
-    function showSlides() {
-        let slides = document.getElementsByClassName("slide");
-        let captions = document.getElementsByClassName("slide-caption");
-        
-        for (let i = 0; i < slides.length; i++) {
-            slides[i].style.display = "none";
-            captions[i].style.display = "none";
+const menuToggle = document.querySelector(".menu-toggle");
+const navigation = document.querySelector(".primary-navigation");
+
+if (menuToggle && navigation) {
+    const closeMenu = () => {
+        menuToggle.setAttribute("aria-expanded", "false");
+        navigation.classList.remove("is-open");
+    };
+
+    menuToggle.addEventListener("click", () => {
+        const isExpanded = menuToggle.getAttribute("aria-expanded") === "true";
+        menuToggle.setAttribute("aria-expanded", String(!isExpanded));
+        navigation.classList.toggle("is-open", !isExpanded);
+    });
+
+    navigation.addEventListener("click", (event) => {
+        if (event.target instanceof HTMLAnchorElement) {
+            closeMenu();
         }
+    });
 
-        slideIndex++;
-
-        if (slideIndex > slides.length) {
-            slideIndex = 1;
+    document.addEventListener("keydown", (event) => {
+        if (event.key === "Escape") {
+            closeMenu();
+            menuToggle.focus();
         }
+    });
+}
 
-        slides[slideIndex - 1].style.display = "block";
-        captions[slideIndex - 1].style.display = "block";
-
-        setTimeout(showSlides, 5000); // Change slide every 5 seconds
-    }
-});
-
-
-function toggleMenu() {
-    var menu = document.getElementById("menu");
-    menu.style.display = menu.style.display === "flex" ? "none" : "flex";
+const copyrightYear = document.querySelector("#copyright-year");
+if (copyrightYear) {
+    copyrightYear.textContent = String(new Date().getFullYear());
 }
