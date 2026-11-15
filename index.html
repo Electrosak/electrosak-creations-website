@@ -101,7 +101,10 @@
                     <div class="service-copy">
                         <h3>High-quality 3D printing</h3>
                         <p>Advanced FDM printing with quality filaments, backed by years of hands-on experience and affordable service in central India.</p>
-                        <p class="service-price">Starting from <strong>₹10 per gram</strong></p>
+                        <a class="service-price service-viewer-trigger" href="?viewer=stl" target="_blank" rel="noopener">
+                            Starting from <strong>₹10 per gram</strong>
+                            <span class="service-viewer-hint">Open free STL viewer ↗</span>
+                        </a>
                     </div>
                 </article>
                 <article class="service-card">
@@ -112,7 +115,10 @@
                     <div class="service-copy">
                         <h3>PCB design &amp; fabrication</h3>
                         <p>Multilayer schematic and PCB layout, manufacturing up to four layers, component sourcing, and PCB assembly.</p>
-                        <p class="service-price">Starting from <strong>₹1,000</strong></p>
+                        <a class="service-price service-viewer-trigger" href="?viewer=gerber" target="_blank" rel="noopener">
+                            Starting from <strong>₹1,000</strong>
+                            <span class="service-viewer-hint">Open free Gerber viewer ↗</span>
+                        </a>
                     </div>
                 </article>
                 <article class="service-card">
@@ -273,6 +279,57 @@
         <p>© <span id="copyright-year"></span> Electrosak Creations. All rights reserved.</p>
         <a class="back-to-top" href="#home">Back to top ↑</a>
     </footer>
+
+    <dialog class="viewer-dialog" id="viewer-dialog" aria-labelledby="viewer-title" aria-describedby="viewer-description">
+        <div class="viewer-dialog-header">
+            <div>
+                <p class="eyebrow eyebrow-purple">Free online tool</p>
+                <h2 id="viewer-title"></h2>
+                <a class="viewer-home-link" href="./">← Back to Electrosak Creations</a>
+            </div>
+            <button class="viewer-close" type="button" aria-label="Close viewer">×</button>
+        </div>
+        <p class="viewer-description" id="viewer-description"></p>
+        <label class="viewer-file-picker">
+            <span id="viewer-file-label"></span>
+            <input id="viewer-file-input" type="file">
+        </label>
+        <p class="viewer-privacy">Your files are processed in your browser and are not uploaded.</p>
+        <p class="viewer-status" id="viewer-status" role="status" aria-live="polite"></p>
+        <div class="stl-viewer" id="stl-viewer" hidden>
+            <section class="stl-weight-estimator" id="stl-weight-estimator" aria-labelledby="stl-weight-title" hidden>
+                <h3 id="stl-weight-title">Estimated print material</h3>
+                <div class="stl-estimator-controls">
+                    <label class="stl-estimator-field" for="stl-material">
+                        Filament
+                        <select id="stl-material">
+                            <option value="1.24">PLA</option>
+                            <option value="1.27">PETG</option>
+                            <option value="1.04">ABS</option>
+                            <option value="1.21">TPU</option>
+                        </select>
+                    </label>
+                    <label class="stl-estimator-field stl-infill-field" for="stl-infill">
+                        Infill <output id="stl-infill-value" for="stl-infill">20%</output>
+                        <input id="stl-infill" type="range" min="0" max="100" step="5" value="20">
+                    </label>
+                </div>
+                <p class="stl-weight-result" id="stl-weight-result" aria-live="polite"></p>
+                <p class="viewer-hint">Rough infill-only estimate assuming the STL uses millimeters. Actual print weight also includes walls, top/bottom layers, and supports; use a slicer for a full estimate.</p>
+            </section>
+            <div class="stl-stage" id="stl-stage"></div>
+            <p class="viewer-hint">Drag to rotate, scroll to zoom, and right-drag to pan.</p>
+        </div>
+        <div class="gerber-viewer" id="gerber-viewer" hidden>
+            <div class="gerber-layer-list" id="gerber-layer-list"></div>
+            <div class="gerber-stage" id="gerber-stage"></div>
+        </div>
+        <p class="viewer-quote">
+            Email your STL/Gerber files to
+            <a href="mailto:electrosak.creations@gmail.com?subject=Quotation%20request&body=Hello%20Electrosak%20Creations%2C%0A%0AI%20would%20like%20a%20quotation%20for%20the%20attached%20design%20file.%0A%0AThank%20you.">electrosak.creations@gmail.com</a>
+            for a quotation. Please attach your design file to the email.
+        </p>
+    </dialog>
 
     <script src="scripts.js"></script>
 </body>
