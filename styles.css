@@ -249,6 +249,57 @@ a {
     box-shadow: 0 0 0 5px rgba(207, 183, 235, 0.15);
 }
 
+.trust-metrics {
+    padding: 28px max(6vw, calc((100vw - var(--content-width)) / 2));
+    background: #fff;
+    border-bottom: 1px solid var(--line);
+}
+
+.trust-metrics-inner {
+    display: grid;
+    max-width: var(--content-width);
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    margin: 0 auto;
+}
+
+.trust-metric {
+    display: flex;
+    min-height: 74px;
+    flex-direction: column;
+    justify-content: center;
+    padding: 4px 24px;
+    border-right: 1px solid var(--line);
+}
+
+.trust-metric:first-child {
+    padding-left: 0;
+}
+
+.trust-metric:last-child {
+    padding-right: 0;
+    border-right: 0;
+}
+
+.trust-metric-value,
+.trust-metric-label {
+    margin: 0;
+}
+
+.trust-metric-value {
+    color: var(--purple);
+    font-size: 25px;
+    font-weight: 700;
+    letter-spacing: -0.04em;
+    line-height: 1.15;
+}
+
+.trust-metric-label {
+    margin-top: 5px;
+    color: var(--muted);
+    font-size: 11px;
+    line-height: 1.4;
+}
+
 .section {
     padding: 108px max(6vw, calc((100vw - var(--content-width)) / 2));
 }
@@ -398,24 +449,29 @@ a {
     padding-bottom: 116px;
 }
 
-.portfolio-grid {
-    display: grid;
-    grid-template-columns: 1.2fr 0.8fr 0.8fr;
-    align-items: stretch;
+.portfolio-carousel {
+    --portfolio-visible: 3;
+}
+
+.portfolio-viewport {
+    overflow: hidden;
+}
+
+.portfolio-track {
+    display: flex;
     gap: 18px;
+    transition: transform 500ms ease;
+    will-change: transform;
 }
 
 .portfolio-item {
     position: relative;
+    flex: 0 0 calc((100% - 36px) / 3);
     min-width: 0;
-    height: 300px;
+    height: 320px;
     margin: 0;
     overflow: hidden;
     background: var(--lavender);
-}
-
-.portfolio-item-tall {
-    height: 390px;
 }
 
 .portfolio-item img {
@@ -439,6 +495,49 @@ a {
     color: #fff;
     font-size: 13px;
     font-weight: 600;
+}
+
+.portfolio-controls {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 18px;
+    margin-top: 24px;
+}
+
+.portfolio-arrow {
+    display: grid;
+    width: 38px;
+    height: 38px;
+    place-items: center;
+    border: 1px solid #d9cbe7;
+    border-radius: 50%;
+    background: #fff;
+    color: var(--purple);
+    cursor: pointer;
+    font: inherit;
+    transition: background 160ms ease, color 160ms ease;
+}
+
+.portfolio-arrow:hover {
+    background: var(--purple);
+    color: #fff;
+}
+
+.portfolio-pause {
+    padding: 7px 10px;
+    border: 0;
+    background: transparent;
+    color: var(--purple);
+    cursor: pointer;
+    font: inherit;
+    font-size: 11px;
+    font-weight: 700;
+}
+
+.portfolio-pause:hover {
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 .testimonials-section {
@@ -789,6 +888,29 @@ a {
         right: 7vw;
     }
 
+    .trust-metrics {
+        padding: 20px 7vw;
+    }
+
+    .trust-metrics-inner {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        row-gap: 18px;
+    }
+
+    .trust-metric {
+        min-height: 64px;
+        padding: 4px 18px;
+    }
+
+    .trust-metric:nth-child(2) {
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    .trust-metric:nth-child(3) {
+        padding-left: 0;
+    }
+
     .section {
         padding-top: 78px;
         padding-bottom: 78px;
@@ -819,18 +941,13 @@ a {
         height: 280px;
     }
 
-    .portfolio-grid {
-        grid-template-columns: 1fr 1fr;
+    .portfolio-carousel {
+        --portfolio-visible: 2;
     }
 
-    .portfolio-item,
-    .portfolio-item-tall {
+    .portfolio-item {
+        flex-basis: calc((100% - 18px) / 2);
         height: 300px;
-    }
-
-    .portfolio-item:first-child {
-        grid-column: 1 / -1;
-        height: 360px;
     }
 
     .contact-section {
@@ -878,6 +995,23 @@ a {
         padding: 66px 6vw;
     }
 
+    .trust-metrics {
+        padding: 18px 6vw;
+    }
+
+    .trust-metric {
+        padding-right: 12px;
+        padding-left: 12px;
+    }
+
+    .trust-metric-value {
+        font-size: 22px;
+    }
+
+    .trust-metric-label {
+        font-size: 10px;
+    }
+
     .about-image img {
         height: auto;
     }
@@ -893,8 +1027,7 @@ a {
         margin-bottom: 30px;
     }
 
-    .services-grid,
-    .portfolio-grid {
+    .services-grid {
         grid-template-columns: 1fr;
         gap: 16px;
     }
@@ -904,8 +1037,7 @@ a {
         padding: 26px 22px;
     }
 
-    .service-card:last-child,
-    .portfolio-item:first-child {
+    .service-card:last-child {
         grid-column: auto;
     }
 
@@ -914,9 +1046,12 @@ a {
         height: 230px;
     }
 
-    .portfolio-item,
-    .portfolio-item-tall,
-    .portfolio-item:first-child {
+    .portfolio-carousel {
+        --portfolio-visible: 1;
+    }
+
+    .portfolio-item {
+        flex-basis: 100%;
         height: 320px;
     }
 
